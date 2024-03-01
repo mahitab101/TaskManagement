@@ -24,7 +24,7 @@ namespace ProjectManagement
 
             //repository pattern
             builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            // auto mapper
+            // auto mapper configuration
             builder.Services.AddAutoMapper(typeof(MapperConfig));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
