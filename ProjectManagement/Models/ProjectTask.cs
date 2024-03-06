@@ -12,7 +12,7 @@ namespace ProjectManagement.Models
         public int Person { get; set; }
         public string Description { get; set; }
         public string Notes { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
         public DateTime CreateDate { get; set; }
         [ForeignKey(nameof(GroupId))]
         public int GroupId { get; set; }

@@ -9,6 +9,7 @@ namespace ProjectManagement.Models
         public int Id { get; set; }
         [Required] 
         public string Title { get; set; }
+        public DateTime CreateDate { get; set; }
         [ForeignKey(nameof(ProjectId))]
         public int ProjectId { get; set; }
         public Project Project { get; set; }
