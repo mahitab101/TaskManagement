@@ -13,6 +13,7 @@ namespace ProjectManagement.Configuration
             CreateMap<Project,GetProjectDto>().ReverseMap();
             CreateMap<Project, ProjectDto>().ReverseMap();
             CreateMap<TaskGroup,TaskGroupDto>().ReverseMap();
+            CreateMap<TaskGroup, CreateTaskGroupDto>().ReverseMap();
         }
     }
 }

@@ -12,5 +12,6 @@ namespace ProjectManagement.Models
         [ForeignKey(nameof(ProjectId))]
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

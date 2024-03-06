@@ -27,7 +27,7 @@ namespace ProjectManagement.Controllers
             return Ok(result);
         }
         //Get project by id
-        [HttpGet("{id}")]
+        [HttpGet("ProjectDetails/{id}")]
         public async Task<ActionResult<ProjectDto>> GetProjectById(int id)
         {
             var project = await _context.Projects.Include(q=>q.TaskGroups).FirstOrDefaultAsync(q=>q.Id==id);
@@ -42,9 +42,8 @@ namespace ProjectManagement.Controllers
         [HttpPost("AddProject")]
         public async Task<ActionResult<Project>> PostProject(CreateProjectDto createProject)
         {
-          
             var project = _mapper.Map<Project>(createProject);
-            _context.Projects.Add(project);
+            _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetProject", new { id = project.Id }, project);
         }

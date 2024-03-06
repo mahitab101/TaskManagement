@@ -14,5 +14,6 @@ namespace ProjectManagement.Models
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public IList<ProjectTask> Tasks { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -17,6 +17,7 @@ namespace ProjectManagement.Models
         [ForeignKey(nameof(GroupId))]
         public int GroupId { get; set; }
         public TaskGroup TaskGroup { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public IList<ProjectTeam> ProjectTeams { get; set; }
     }
 }
