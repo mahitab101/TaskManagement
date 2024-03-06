@@ -22,7 +22,8 @@ namespace ProjectManagement.Controllers
         [HttpGet("GetProject")]
         public async Task<ActionResult<IList<GetProjectDto>>> GetProject()
         {
-            var projects =  await _context.Projects.ToListAsync();
+            var projects =  await _context.Projects.Where(b => !b.IsDeleted)
+                                    .ToListAsync();
             var result = _mapper.Map<List<GetProjectDto>>(projects);
             return Ok(result);
         }
@@ -30,7 +31,7 @@ namespace ProjectManagement.Controllers
         [HttpGet("ProjectDetails/{id}")]
         public async Task<ActionResult<ProjectDto>> GetProjectById(int id)
         {
-            var project = await _context.Projects.Include(q=>q.TaskGroups).FirstOrDefaultAsync(q=>q.Id==id);
+            var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);
             if (project == null)
             {
                 return NotFound();
@@ -43,10 +44,38 @@ namespace ProjectManagement.Controllers
         public async Task<ActionResult<Project>> PostProject(CreateProjectDto createProject)
         {
             var project = _mapper.Map<Project>(createProject);
-            _context.Projects.AddAsync(project);
+            await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetProject", new { id = project.Id }, project);
         }
+
+        // update project
+        [HttpPut("UpdateProject/{id}")]
+        public async Task<ActionResult<Project>> UpdateProject(int id,UpdateProjectDto updateProjectDto)
+        {
+            if (id != updateProjectDto.Id)
+            {
+                return BadRequest("Invalid Record id");
+            }
+           // _context.Entry(project).State = EntityState.Modified;
+           var project = await _context.Projects.FindAsync(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(updateProjectDto, project);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
 
     }
 }

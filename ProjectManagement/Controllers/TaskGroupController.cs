@@ -45,8 +45,8 @@ namespace ProjectManagement.Controllers
         public async Task<ActionResult<TaskGroup>> AddGroup(CreateTaskGroupDto taskGroupDto)
         {
             var taskGroup = _mapper.Map<TaskGroup>(taskGroupDto);
-            _context.TaskGroups.AddAsync(taskGroup);
-           await _context.SaveChangesAsync();
+            await _context.TaskGroups.AddAsync(taskGroup);
+            await _context.SaveChangesAsync();
             return CreatedAtAction("GetTaskGroup", new { id = taskGroup.Id }, taskGroup);
         }
     }
