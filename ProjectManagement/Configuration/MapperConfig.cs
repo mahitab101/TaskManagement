@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using ProjectManagement.Data.Project;
+using ProjectManagement.Data.TaskGroup;
+using ProjectManagement.Models;
 
 namespace ProjectManagement.Configuration
 {
@@ -6,7 +9,10 @@ namespace ProjectManagement.Configuration
     {
         public MapperConfig()
         {
-                
+            CreateMap<Project, CreateProjectDto>().ReverseMap();   
+            CreateMap<Project,GetProjectDto>().ReverseMap();
+            CreateMap<Project, ProjectDto>().ReverseMap();
+            CreateMap<TaskGroup,TaskGroupDto>().ReverseMap();
         }
     }
 }
