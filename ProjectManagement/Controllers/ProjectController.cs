@@ -13,7 +13,7 @@ namespace ProjectManagement.Controllers
         private readonly ApplicationDBContext _context;
         private readonly IMapper _mapper;
 
-        public ProjectController(ApplicationDBContext context,IMapper mapper)
+        public ProjectController(ApplicationDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -22,7 +22,7 @@ namespace ProjectManagement.Controllers
         [HttpGet("GetProject")]
         public async Task<ActionResult<IList<GetProjectDto>>> GetProject()
         {
-            var projects =  await _context.Projects.Where(b => !b.IsDeleted)
+            var projects = await _context.Projects.Where(b => !b.IsDeleted)
                                     .ToListAsync();
             var result = _mapper.Map<List<GetProjectDto>>(projects);
             return Ok(result);
@@ -32,7 +32,7 @@ namespace ProjectManagement.Controllers
         public async Task<ActionResult<ProjectDto>> GetProjectById(int id)
         {
             //var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);    
-            var project = await _context.Projects.Where(p => p.Id == id && !p.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync();
+            var project = await _context.Projects.Where(p => p.Id == id && !p.IsDeleted).Include(p => p.TaskGroups).FirstOrDefaultAsync();
             if (project == null)
             {
                 return NotFound();
@@ -73,15 +73,22 @@ namespace ProjectManagement.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                throw;
+                if (!ProjectExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             return Ok(project);
         }
 
-        //private async Task<bool> ProjectExists(int id)
-        //{
-        //    var entity = await _context.FindAsync(id);
-        //}
+        private bool ProjectExists(int id)
+        {
+            return _context.Projects.Any(b => b.Id == id);
+        }
     }
 }
