@@ -9,12 +9,14 @@ namespace ProjectManagement.Configuration
     {
         public MapperConfig()
         {
-            CreateMap<Project, CreateProjectDto>().ReverseMap();   
-            CreateMap<Project,GetProjectDto>().ReverseMap();
-            CreateMap<Project, ProjectDto>().ReverseMap();
+            //project
             CreateMap<Project, BaseProjectDto>().ReverseMap();
+            CreateMap<Project, ProjectDto>().ReverseMap();
+            CreateMap<Project,GetProjectDto>().ReverseMap();
+            CreateMap<Project, CreateProjectDto>().ReverseMap();   
             CreateMap<Project, UpdateProjectDto>().ReverseMap();
 
+            //Task Group
             CreateMap<TaskGroup,TaskGroupDto>().ReverseMap();
             CreateMap<TaskGroup, CreateTaskGroupDto>().ReverseMap();
         }

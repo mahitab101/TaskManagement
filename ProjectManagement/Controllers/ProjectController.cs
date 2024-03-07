@@ -31,7 +31,8 @@ namespace ProjectManagement.Controllers
         [HttpGet("ProjectDetails/{id}")]
         public async Task<ActionResult<ProjectDto>> GetProjectById(int id)
         {
-            var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);
+            //var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);    
+            var project = await _context.Projects.Where(p => p.Id == id && !p.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync();
             if (project == null)
             {
                 return NotFound();
@@ -51,31 +52,36 @@ namespace ProjectManagement.Controllers
 
         // update project
         [HttpPut("UpdateProject/{id}")]
-        public async Task<ActionResult<Project>> UpdateProject(int id,UpdateProjectDto updateProjectDto)
+        public async Task<IActionResult> PutProject(int id, UpdateProjectDto updateProjectDto)
         {
             if (id != updateProjectDto.Id)
             {
-                return BadRequest("Invalid Record id");
+                return BadRequest("Invalid Record Id");
             }
-           // _context.Entry(project).State = EntityState.Modified;
-           var project = await _context.Projects.FindAsync(id);
+
+            //_context.Entry(country).State = EntityState.Modified;
+            var project = await _context.Projects.FindAsync(id);
             if (project == null)
             {
                 return NotFound();
             }
             _mapper.Map(updateProjectDto, project);
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                return NotFound();
+                throw;
             }
 
-            return NoContent();
+            return Ok(project);
         }
 
-
+        //private async Task<bool> ProjectExists(int id)
+        //{
+        //    var entity = await _context.FindAsync(id);
+        //}
     }
 }
