@@ -9,5 +9,10 @@ namespace ProjectManagement.Models
        public DbSet<ProjectTeam> ProjectTeams { get; set; }
        public DbSet<TaskGroup> TaskGroups { get; set; }
        public DbSet<ProjectTask> ProjectTasks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Project>().HasQueryFilter(b => !b.IsDeleted);
+        }
     }
 }

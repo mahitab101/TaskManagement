@@ -19,11 +19,10 @@ namespace ProjectManagement.Controllers
             _mapper = mapper;
         }
         //Get all projects
-        [HttpGet("GetProject")]
+        [HttpGet("GetProjects")]
         public async Task<ActionResult<IList<GetProjectDto>>> GetProject()
         {
-            var projects = await _context.Projects.Where(b => !b.IsDeleted)
-                                    .ToListAsync();
+            var projects = await _context.Projects.ToListAsync();
             var result = _mapper.Map<List<GetProjectDto>>(projects);
             return Ok(result);
         }
@@ -32,7 +31,7 @@ namespace ProjectManagement.Controllers
         public async Task<ActionResult<ProjectDto>> GetProjectById(int id)
         {
             //var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);    
-            var project = await _context.Projects.Where(p => p.Id == id && !p.IsDeleted).Include(p => p.TaskGroups).FirstOrDefaultAsync();
+            var project = await _context.Projects.Include(p => p.TaskGroups).FirstOrDefaultAsync(p => p.Id == id);
             if (project == null)
             {
                 return NotFound();
