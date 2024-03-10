@@ -6,8 +6,8 @@
         Task<List<T>> GetAllAsync();
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
-        Task DeleteAsync(int id);
-        Task<bool> DeleteAllAsync();
+        //Task DeleteAsync(int id);
+        //Task<bool> DeleteAllAsync();
         Task<bool> Exist(int id);
     }
 }

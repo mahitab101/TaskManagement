@@ -4,6 +4,7 @@ using ProjectManagement.Configuration;
 using ProjectManagement.Contracts;
 using ProjectManagement.Models;
 using ProjectManagement.Repositries;
+using ProjectManagement.Unit;
 
 namespace ProjectManagement
 {
@@ -25,7 +26,8 @@ namespace ProjectManagement
 
             //repository pattern
             builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            builder.Services.AddTransient<IProjectRepository,ProjectRepository>();
+            builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
+           builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
             // auto mapper configuration
             builder.Services.AddAutoMapper(typeof(MapperConfig));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

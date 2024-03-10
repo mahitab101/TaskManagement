@@ -20,18 +20,18 @@ namespace ProjectManagement.Repositries
             return entity;
         }
 
-        public Task<bool> DeleteAllAsync()
-        {
-            throw new NotImplementedException();
+        //public Task<bool> DeleteAllAsync()
+        //{
+        //    throw new NotImplementedException();
 
-        }
+        //}
 
-        public async Task DeleteAsync(int id)
-        {
-            var entity = await GetAsync(id);
-            _context.Update(entity);
-            await _context.SaveChangesAsync();
-        }
+        //public async Task DeleteAsync(int id)
+        //{
+        //    var entity = await GetAsync(id);
+        //    _context.Update(entity);
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task<bool> Exist(int id)
         {
