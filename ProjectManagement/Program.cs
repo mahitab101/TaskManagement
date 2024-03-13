@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Configuration;
 using ProjectManagement.Contracts;
 using ProjectManagement.Models;
-using ProjectManagement.Repositries;
+using ProjectManagement.Repositories;
 using ProjectManagement.Unit;
 
 namespace ProjectManagement

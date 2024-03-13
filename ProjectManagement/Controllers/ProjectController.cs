@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProjectManagement.Contracts;
 using ProjectManagement.Data.Project;
 using ProjectManagement.Models;
 using ProjectManagement.Unit;
@@ -13,11 +14,13 @@ namespace ProjectManagement.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IProjectRepository _projectRepository;
 
-        public ProjectController(IMapper mapper,IUnitOfWork unitOfWork)
+        public ProjectController(IMapper mapper,IUnitOfWork unitOfWork,IProjectRepository projectRepository)
         {
             _mapper = mapper;
            _unitOfWork = unitOfWork;
+            _projectRepository = projectRepository;
         }
         //Get all projects
         [HttpGet("GetProjects")]
@@ -35,7 +38,7 @@ namespace ProjectManagement.Controllers
             //var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);    
             //var project = await _context.Projects.Include(p => p.TaskGroups)
             //    .FirstOrDefaultAsync(p => p.Id == id);
-            var project = await _unitOfWork.Projects.GetAsync(id);
+            var project = await _projectRepository.GetDetails(id);
 
             if (project == null)
             {

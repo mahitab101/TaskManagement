@@ -1,6 +1,6 @@
 ﻿using ProjectManagement.Contracts;
 using ProjectManagement.Models;
-using ProjectManagement.Repositries;
+using ProjectManagement.Repositories;
 
 
 namespace ProjectManagement.Unit

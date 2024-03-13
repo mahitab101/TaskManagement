@@ -2,7 +2,7 @@
 using ProjectManagement.Contracts;
 using ProjectManagement.Models;
 
-namespace ProjectManagement.Repositries
+namespace ProjectManagement.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
