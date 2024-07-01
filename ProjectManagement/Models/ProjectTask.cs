@@ -14,6 +14,7 @@ namespace ProjectManagement.Models
         public string Notes { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         [ForeignKey(nameof(GroupId))]
         public int GroupId { get; set; }
         public TaskGroup TaskGroup { get; set; }

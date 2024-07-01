@@ -13,6 +13,7 @@ namespace ProjectManagement.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public bool IsDeleted { get; set; } = false;
         public IList<TaskGroup> TaskGroups { get; set; }
     }

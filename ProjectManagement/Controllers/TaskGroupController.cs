@@ -49,5 +49,29 @@ namespace ProjectManagement.Controllers
             await _unitOfWork.TaskGroups.AddAsync(taskGroup);
             return CreatedAtAction("GetTaskGroup", new { id = taskGroup.Id }, taskGroup);
         }
+        //update endpoint
+        [HttpPut("UpdateGroup/{id}")]
+        public async Task<IActionResult> PutGroup(int id,TaskGroupDto taskGroupDto)
+        {
+            if (id != taskGroupDto.Id)
+            {
+                return BadRequest("Invalid Record Id");
+            }
+            var group = await _unitOfWork.TaskGroups.GetAsync(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(taskGroupDto, group);
+          
+             await _unitOfWork.TaskGroups.UpdateAsync(group);
+           
+            return Ok(group);
+        }
+
+        private async Task<bool> GroupExsits(int id)
+        {
+            return await _unitOfWork.TaskGroups.Exist(id);
+        }
     }
 }
