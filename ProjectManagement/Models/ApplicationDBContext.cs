@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProjectManagement.Configuration;
 
 namespace ProjectManagement.Models
 {
@@ -14,6 +15,7 @@ namespace ProjectManagement.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.Entity<Project>().HasQueryFilter(b => !b.IsDeleted);
         }
     }
