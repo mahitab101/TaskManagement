@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ProjectManagement.Data.Project;
 using ProjectManagement.Data.TaskGroup;
+using ProjectManagement.Data.User;
 using ProjectManagement.Models;
 
 namespace ProjectManagement.Configuration
@@ -19,6 +20,9 @@ namespace ProjectManagement.Configuration
             //Task Group
             CreateMap<TaskGroup,TaskGroupDto>().ReverseMap();
             CreateMap<TaskGroup, CreateTaskGroupDto>().ReverseMap();
+
+            //User
+            CreateMap<UserDto, AuthUser>().ReverseMap();
         }
     }
 }
