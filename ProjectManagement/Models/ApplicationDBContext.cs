@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectManagement.Models
 {
-    public class ApplicationDBContext:DbContext
+    public class ApplicationDBContext:IdentityDbContext<AuthUser>
     {
        public ApplicationDBContext(DbContextOptions options) : base(options) { }
        public DbSet<Project> Projects { get; set; }
@@ -12,6 +13,7 @@ namespace ProjectManagement.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Project>().HasQueryFilter(b => !b.IsDeleted);
         }
     }

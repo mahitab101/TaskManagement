@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Configuration;
 using ProjectManagement.Contracts;
@@ -23,6 +24,10 @@ namespace ProjectManagement
             {
                 options.UseSqlServer(connectionString);
             });
+
+            builder.Services.AddIdentityCore<AuthUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDBContext>();
 
             //repository pattern
             builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
