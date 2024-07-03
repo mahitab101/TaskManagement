@@ -73,7 +73,7 @@ namespace ProjectManagement
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectManagement.Models;
 
@@ -11,9 +12,10 @@ using ProjectManagement.Models;
 namespace ProjectManagement.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240703055408_updateProjectTable")]
+    partial class updateProjectTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,15 +53,15 @@ namespace ProjectManagement.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3de23017-c9f2-49cc-b62c-c4759359448b",
-                            ConcurrencyStamp = "e03a67bd-4018-4522-86d8-fbbbb9bb6be0",
+                            Id = "b0fc21fc-b0b7-4344-bdf3-a9b8e8b83a2b",
+                            ConcurrencyStamp = "11391355-215e-4c2c-a86a-7d44639dd8f0",
                             Name = "Administrator ",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "225fb9c9-38b3-46b4-bf60-006378b02366",
-                            ConcurrencyStamp = "50ae8be4-be05-4b9c-8a2c-d10b9fb46352",
+                            Id = "eca597ff-1e78-4e8f-a314-74303fea508f",
+                            ConcurrencyStamp = "e32e3bb1-279e-4cd6-85b8-3f723a98385c",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -253,8 +255,8 @@ namespace ProjectManagement.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUser")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUser")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -275,8 +277,8 @@ namespace ProjectManagement.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UpdateUser")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

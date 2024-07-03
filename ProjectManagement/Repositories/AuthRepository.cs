@@ -52,7 +52,7 @@ namespace ProjectManagement.Repositories
 
             if (emailWithSameNameExist)
             {
-                throw new Exception("Email already exists");
+                throw new Exception("This email already exists");
             }
 
             user.UserName = userDto.Email;

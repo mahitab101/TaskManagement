@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Contracts;
+using ProjectManagement.Data.Project;
 using ProjectManagement.Models;
 using System.Threading.Tasks;
 
@@ -20,5 +21,7 @@ namespace ProjectManagement.Repositories
                 .Include(p => p.TaskGroups)
                 .FirstOrDefaultAsync(p => p.Id == projectId && !p.IsDeleted);
         }
+
+      
     }
 }

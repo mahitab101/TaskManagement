@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Contracts;
 using ProjectManagement.Data.Project;
 using ProjectManagement.Models;
 using ProjectManagement.Unit;
+using System.Security.Claims;
 
 namespace ProjectManagement.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProjectController : ControllerBase
@@ -35,9 +38,6 @@ namespace ProjectManagement.Controllers
         [HttpGet("ProjectDetails/{id}")]
         public async Task<ActionResult<ProjectDto>> GetProjectById(int id)
         {
-            //var project = await _context.Projects.Where(b => !b.IsDeleted).Include(p=>p.TaskGroups).FirstOrDefaultAsync(p=>p.Id==id);    
-            //var project = await _context.Projects.Include(p => p.TaskGroups)
-            //    .FirstOrDefaultAsync(p => p.Id == id);
             var project = await _projectRepository.GetDetails(id);
 
             if (project == null)
@@ -51,7 +51,11 @@ namespace ProjectManagement.Controllers
         [HttpPost("AddProject")]
         public async Task<ActionResult<Project>> PostProject(CreateProjectDto createProject)
         {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             var project = _mapper.Map<Project>(createProject);
+            project.CreateUser = userId; 
+            project.UpdateUser = userId;
             await _unitOfWork.Projects.AddAsync(project);
             return CreatedAtAction("GetProjects", new { id = project.Id }, project);
         }
