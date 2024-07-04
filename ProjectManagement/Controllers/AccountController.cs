@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Contracts;
 using ProjectManagement.Data.User;
 using ProjectManagement.Models;
@@ -11,10 +12,12 @@ namespace ProjectManagement.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAuthRepository _authRepository;
+        private readonly ApplicationDBContext _dBContext;
 
-        public AccountController(IAuthRepository authRepository)
+        public AccountController(IAuthRepository authRepository,ApplicationDBContext dBContext)
         {
             _authRepository = authRepository;
+            _dBContext = dBContext;
         }
 
         [HttpPost]
@@ -31,6 +34,21 @@ namespace ProjectManagement.Controllers
                 return BadRequest(ModelState);
             }
             return Ok(userDto);
+        }
+
+
+        [HttpPost]
+        [Route("Verify")]
+        public async Task<ActionResult> Verify(string email)
+        {
+            var user =await _dBContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                return BadRequest("Invalid email");
+            }
+            user.EmailConfirmed = true;
+            await _dBContext.SaveChangesAsync();
+            return Ok("user verfied");
         }
 
         [HttpPost]
