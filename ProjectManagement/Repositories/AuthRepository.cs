@@ -57,9 +57,9 @@ namespace ProjectManagement.Repositories
 
             user.UserName = userDto.Email;
 
-            var result = await _userManager.CreateAsync(user,userDto.Password); 
+            var result = await _userManager.CreateAsync(user,userDto.Password);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "User");
             }

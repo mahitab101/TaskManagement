@@ -29,7 +29,6 @@ namespace ProjectManagement.Controllers
         [HttpGet("GetProjects")]
         public async Task<ActionResult<IList<GetProjectDto>>> GetProjects()
         {
-            //var projects = await _context.Projects.ToListAsync();
             var projects = await _unitOfWork.Projects.GetAllAsync();
             var result = _mapper.Map<List<GetProjectDto>>(projects);
             return Ok(result);
