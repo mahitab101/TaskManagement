@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Contracts;
@@ -18,12 +19,14 @@ namespace ProjectManagement.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProjectRepository _projectRepository;
+        private readonly UserManager<AuthUser> _userManager;
 
-        public ProjectController(IMapper mapper,IUnitOfWork unitOfWork,IProjectRepository projectRepository)
+        public ProjectController(IMapper mapper,IUnitOfWork unitOfWork,IProjectRepository projectRepository,UserManager<AuthUser> userManager)
         {
             _mapper = mapper;
            _unitOfWork = unitOfWork;
             _projectRepository = projectRepository;
+            _userManager = userManager;
         }
         //Get all projects
         [HttpGet("GetProjects")]
@@ -50,8 +53,7 @@ namespace ProjectManagement.Controllers
         [HttpPost("AddProject")]
         public async Task<ActionResult<Project>> PostProject(CreateProjectDto createProject)
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var project = _mapper.Map<Project>(createProject);
             project.CreateUser = userId; 
             project.UpdateUser = userId;

@@ -78,8 +78,9 @@ namespace ProjectManagement.Repositories
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, authUser.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti,authUser.Id),
                 new Claim(JwtRegisteredClaimNames.Sub,authUser.Email),
-                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email,authUser.Email),
                 new Claim("uid",authUser.Id)
             }.Union(userClaims).Union(roleClaims);

@@ -46,6 +46,10 @@ namespace ProjectManagement.Controllers
             {
                 return BadRequest("Invalid email");
             }
+            if (user.EmailConfirmed == true)
+            {
+                return Ok("this email is already verfied!");
+            }
             user.EmailConfirmed = true;
             await _dBContext.SaveChangesAsync();
             return Ok("user verfied");
